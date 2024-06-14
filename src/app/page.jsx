@@ -3,12 +3,15 @@ import { useState } from "react";
 import Card_Data from "@/components/Card_Data";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/Store/Slice/CartSlice";
 
 export default function Home() {
   const [data, setdata] = useState(Card_Data);
+  const dispatch = useDispatch();
 
   const sendData = (items) => {
-    console.log(items);
+    dispatch(addToCart(items));
   };
   return (
     <>
