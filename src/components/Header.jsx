@@ -4,7 +4,7 @@ import { FaCartArrowDown } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 
 const Header = () => {
-  const value = useSelector((state) => state.allCart);
+  const values = useSelector((state) => state.allcart);
   return (
     <>
       <header className="bg-[#cccccc]">
@@ -17,7 +17,7 @@ const Header = () => {
               <FaCartArrowDown className="text-2xl lg:text-3xl" />
               <p className="w-[1.3em] h-[1.3rem] bg-red-600 rounded-full flex justify-center items-center absolute top-[-10px] left-[27px] lg:left-[33px]">
                 <span className="text-white font-bold text-sm w-fit">
-                  {value.length}
+                  {values.length}
                 </span>
               </p>
             </Link>

@@ -30,7 +30,7 @@ export default function Home() {
                 <p className="mt-1 text-base text-gray-600">{address}</p>
                 <p className="mt-1 flex justify-between mb-3">
                   <span className="text-base text-blue-500 font-semibold">
-                    {price}
+                    ₹ {price}
                   </span>
                   <span className="text-base text-blue-500 font-semibold">
                     {rating} ⭐
