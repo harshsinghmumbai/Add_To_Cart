@@ -19,12 +19,17 @@ export default function Home() {
         {data.map((items, id) => {
           const { imgdata, dish, address, price, rating } = items;
           return (
-            <div className="w-[300px] rounded-md border m-auto mt-3" key={id}>
-              <img
-                src={imgdata}
-                alt="Laptop"
-                className="h-[200px] w-full rounded-md object-cover"
-              />
+            <div
+              className="w-[300px] rounded-md border m-auto mt-3 z-0"
+              key={id}
+            >
+              <div className="overflow-hidden rounded-md">
+                <img
+                  src={imgdata}
+                  alt="Laptop"
+                  className="h-[200px] w-full rounded-md object-cover hover:scale-125 duration-500 hover:cursor-pointer"
+                />
+              </div>
               <div className="p-4">
                 <h1 className="text-lg font-semibold capitalize">{dish}</h1>
                 <p className="mt-1 text-base text-gray-600">{address}</p>

@@ -18,11 +18,15 @@ const cartslice = createSlice({
         state.push(temp);
       }
     },
-    // removeFromCart: (state, action) => {
-    //   state.cart = state.cart.filter((item) => item.id !== action.payload);
-    // },
+    RemoveAllCart: (state, action) => {
+      return (state = []);
+    },
+    Remove_Item: (state, action) => {
+      const value = state.findIndex((item) => item.id === action.payload.id);
+      state.splice(value, 1);
+    },
   },
 });
 
-export const { addToCart } = cartslice.actions;
+export const { addToCart, RemoveAllCart, Remove_Item } = cartslice.actions;
 export default cartslice.reducer;
