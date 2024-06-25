@@ -20,7 +20,7 @@ export default function Home() {
           const { imgdata, dish, address, price, rating } = items;
           return (
             <div
-              className="w-[300px] rounded-md border m-auto mt-3 z-0"
+              className="w-[300px] rounded-md border dark:border dark:border-gray-500 m-auto mt-3 z-0"
               key={id}
             >
               <div className="overflow-hidden rounded-md">
@@ -43,13 +43,14 @@ export default function Home() {
                 </p>
                 <Button
                   variant="outline"
+                  className="active:scale-125 transition ease-in-out"
                   onClick={() => {
                     toast(`${dish}`, {
                       description: "Item add to Your Cart",
                       className:
                         "group-[.toaster]:bg-green-100 group-[.toaster]:border group-[.toaster]:border-green-800",
                       cancel: {
-                        label: "Cancel",
+                        label: "Close",
                         onClick: () => console.log("Undo"),
                       },
                     });

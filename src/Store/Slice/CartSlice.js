@@ -25,8 +25,15 @@ const cartslice = createSlice({
       const value = state.findIndex((item) => item.id === action.payload.id);
       state.splice(value, 1);
     },
+    RemoveSingleQnty: (state, action) => {
+      const IndexValue = state.findIndex(
+        (item) => item.id === action.payload.id
+      );
+      state[IndexValue].qnty -= 1;
+    },
   },
 });
 
-export const { addToCart, RemoveAllCart, Remove_Item } = cartslice.actions;
+export const { addToCart, RemoveAllCart, Remove_Item, RemoveSingleQnty } =
+  cartslice.actions;
 export default cartslice.reducer;

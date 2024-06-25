@@ -10,7 +10,12 @@ import {
 } from "@/components/ui/table";
 import { useSelector, useDispatch } from "react-redux";
 import { MdDeleteForever } from "react-icons/md";
-import { RemoveAllCart, Remove_Item } from "@/Store/Slice/CartSlice";
+import {
+  RemoveAllCart,
+  RemoveSingleQnty,
+  Remove_Item,
+  addToCart,
+} from "@/Store/Slice/CartSlice";
 import { toast } from "sonner";
 import {
   AlertDialog,
@@ -23,10 +28,13 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import { CiCirclePlus, CiCircleMinus } from "react-icons/ci";
+import { useEffect, useState } from "react";
 
 const cart = () => {
   const data = useSelector((state) => state.allcart);
   const dispatch = useDispatch();
+  const [totalprices, settotalprices] = useState();
 
   const DeleteAllCart = () => {
     dispatch(RemoveAllCart());
@@ -35,6 +43,27 @@ const cart = () => {
   const delete_item = (item) => {
     dispatch(Remove_Item(item));
   };
+
+  const add_item = (item) => {
+    dispatch(addToCart(item));
+  };
+
+  const Decrement_Qnty = (item) => {
+    dispatch(RemoveSingleQnty(item));
+  };
+
+  const TotalPrices = () => {
+    let totalprices = 0;
+    data.map((item) => {
+      const { price, qnty } = item;
+      totalprices = price * qnty + totalprices;
+    });
+    settotalprices(totalprices);
+  };
+
+  useEffect(() => {
+    TotalPrices();
+  }, [TotalPrices]);
   return (
     <>
       <div className="border border-gray-500 rounded-xl max-w-3xl w-[80%] m-auto mt-5 ">
@@ -57,7 +86,7 @@ const cart = () => {
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogTitle>Cart Items Emty?</AlertDialogTitle>
                   <AlertDialogDescription>
                     This action cannot be undone. This will delete all cart item
                     from your ecommerce webapp
@@ -106,7 +135,7 @@ const cart = () => {
                               className:
                                 "group-[.toaster]:bg-red-100 group-[.toaster]:border group-[.toaster]:border-red-800",
                               cancel: {
-                                label: "Cancel",
+                                label: "Close",
                                 onClick: () => console.log("Undo"),
                               },
                             });
@@ -125,7 +154,25 @@ const cart = () => {
                         {dish}
                       </TableCell>
                       <TableCell className="text-center">₹ {price}</TableCell>
-                      <TableCell className="text-center">{qnty}</TableCell>
+                      <TableCell className="text-center flex ">
+                        <div className="flex justify-center items-center h-full space-x-1">
+                          <CiCirclePlus
+                            className="text-xl font-extrabold text-red-600 mt-[11px] cursor-pointer"
+                            onClick={() => add_item(item)}
+                          />
+                          <p className="mt-[11px] text-lg font-semibold">
+                            {qnty}
+                          </p>
+                          <CiCircleMinus
+                            className="text-xl font-extrabold text-red-600 mt-[11px] cursor-pointer"
+                            onClick={
+                              qnty <= 1
+                                ? () => delete_item(item)
+                                : () => Decrement_Qnty(item)
+                            }
+                          />
+                        </div>
+                      </TableCell>
                       <TableCell className="text-center">
                         ₹ {price * qnty}
                       </TableCell>
@@ -135,8 +182,8 @@ const cart = () => {
               </TableBody>
             </Table>
             <div className="flex justify-end space-x-5 p-2 px-5 font-serif font-semibold text-xs sm:text-base sm:space-x-10">
-              <p>Items cart : 5</p>
-              <p>Total Prices :78 </p>
+              <p>Items cart : {data.length}</p>
+              <p>Total Prices : {totalprices} </p>
             </div>
           </div>
         )}
